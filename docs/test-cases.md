@@ -17,7 +17,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - Ads and the consent dialog are blocked at the network level for every test (see README). No case contains steps to close ads or accept consent.
 - Each test runs in its own browser context, so the guest cart and session are isolated per test. This was verified: a fresh context starts with an empty cart and no `sessionid`.
 - Test users are generated per test with a unique email (`<prefix>_<timestamp>_<worker>_<random>@example.com`). Any account a test creates is deleted through the public API in fixture teardown, which runs even when the test fails. Teardown confirms deletion through `getUserDetailByEmail` and fails if the account still exists.
-- Browser validation is asserted through the field's validity state (`valueMissing`, `typeMismatch`) and the absence of a request, not through the message text. The text depends on browser and OS locale.
+- Browser validation is asserted through the field's validity state (`valueMissing`, `typeMismatch`) and by the invalid event firing on that field with no navigation, not through the message text. The text depends on browser and OS locale.
 - Product expectations (name, price, availability, product id) come from test data, not from the test code.
 
 ---
@@ -39,7 +39,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - **Expected result:**
   - After step 5 the account created confirmation is shown.
   - After step 6 the header shows "Logged in as" followed by the user's name, plus Logout and Delete Account links. "Signup / Login" is not shown.
-  - The user detail API for this email returns the account, and name, email, first name, last name, address, country, state, city and zipcode match what was entered. Mobile number is not returned by the API, so it is not compared.
+  - The user detail API for this email returns the account, and every field it returns matches what was entered: name, email, title, date of birth, first name, last name, company, address 1 and 2, country, state, city and zipcode. Mobile number, password and the newsletter and offers choices are not returned by the API, so they are not compared.
 - **Automated:** Yes. The API check proves the data was stored, not only that a confirmation page was rendered.
 
 ### REG-02 Signup with an already registered email is rejected
@@ -65,7 +65,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - **Steps:**
   1. Open the Signup / Login page.
   2. Leave name empty, enter the email, click Signup.
-- **Expected result:** The name field is invalid with `valueMissing`. No request is sent to `/signup`. The account details form is not shown.
+- **Expected result:** The name field is invalid with `valueMissing`. Submission is blocked by browser validation on that field (the invalid event fires on it and the page does not navigate). The account details form is not shown.
 - **Automated:** Yes, as one data-driven test together with REG-04 and REG-05.
 
 ### REG-04 Signup step 1 is blocked when email is empty
@@ -74,7 +74,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - **Preconditions:** None.
 - **Test data:** Valid name, empty email.
 - **Steps:** As REG-03, with name filled and email empty.
-- **Expected result:** The email field is invalid with `valueMissing`. No request is sent. The account details form is not shown.
+- **Expected result:** The email field is invalid with `valueMissing`. Submission is blocked by browser validation on that field (the invalid event fires on it and the page does not navigate). The account details form is not shown.
 - **Automated:** Yes, data-driven with REG-03.
 
 ### REG-05 Signup step 1 is blocked for a malformed email
@@ -83,7 +83,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - **Preconditions:** None.
 - **Test data:** Valid name, email `abc` (no `@`).
 - **Steps:** As REG-03, with the malformed email.
-- **Expected result:** The email field is invalid with `typeMismatch`. No request is sent. The account details form is not shown.
+- **Expected result:** The email field is invalid with `typeMismatch`. Submission is blocked by browser validation on that field (the invalid event fires on it and the page does not navigate). The account details form is not shown.
 - **Automated:** Yes, data-driven with REG-03. Only one malformed value is used: `abc` and `abc@` were observed to fail the same way, so a second value adds no coverage.
 
 ### REG-06 Account is not created when a required field on the account form is empty
@@ -95,7 +95,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
   1. Complete signup step 1 with a unique name and email.
   2. Fill all account fields except password.
   3. Click Create Account.
-- **Expected result:** The password field is invalid with `valueMissing`. The account created confirmation is not shown. The user detail API returns "not found" for the email.
+- **Expected result:** The password field is invalid with `valueMissing`. Submission is blocked by browser validation on that field (the invalid event fires on it and the page does not navigate). The account created confirmation is not shown. The user detail API returns "not found" for the email.
 - **Automated:** Yes. Password is used because it is the one required field with no prefill and no default.
 
 ### REG-07 Whitespace-only name is rejected at signup step 1
