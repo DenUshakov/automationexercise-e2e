@@ -9,3 +9,6 @@ reports/
 
 # Local recon scripts and evidence, not part of the suite
 recon/
+
+# Local assistant notes, not part of the submission
+CLAUDE.md
