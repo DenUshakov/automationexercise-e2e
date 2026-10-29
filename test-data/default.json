@@ -1,0 +1,37 @@
+{
+  "user": {
+    "emailPrefix": "aqa",
+    "emailDomain": "example.com",
+    "namePrefix": "AQA User",
+    "title": "Mr",
+    "birthDate": { "day": "15", "month": "6", "year": "1990" },
+    "firstName": "Test",
+    "lastName": "User",
+    "company": "Test Company",
+    "address1": "1 Test Street",
+    "address2": "Unit 2",
+    "country": "Canada",
+    "state": "Ontario",
+    "city": "Toronto",
+    "zipcode": "M5V 2T6",
+    "mobileNumber": "5550100100"
+  },
+  "product": {
+    "id": 1,
+    "searchTerm": "Blue Top",
+    "name": "Blue Top",
+    "price": "Rs. 500",
+    "availability": "In Stock"
+  },
+  "search": {
+    "caseVariants": ["blue top", "BLUE TOP"],
+    "partialTerm": "top",
+    "noResultsTerm": "zzzqqq",
+    "specialCharacters": ["%", "'", "<script>"],
+    "paddedTerm": "  Blue Top  "
+  },
+  "cart": {
+    "quantity": 3,
+    "belowMinimumQuantity": -1
+  }
+}

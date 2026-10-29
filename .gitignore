@@ -1,0 +1,11 @@
+node_modules/
+.env
+
+# Playwright output
+test-results/
+playwright-report/
+blob-report/
+reports/
+
+# Local recon scripts and evidence, not part of the suite
+recon/
