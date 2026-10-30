@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      BASE_URL: ${{ vars.BASE_URL }}
+      # Not a secret: the target is a public site, so it is written here where reviewers can see it.
+      BASE_URL: https://automationexercise.com
     outputs:
       report-ready: ${{ steps.pages-artifact.outcome == 'success' }}
     steps:
