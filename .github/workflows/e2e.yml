@@ -21,12 +21,14 @@ jobs:
     timeout-minutes: 20
     env:
       BASE_URL: ${{ vars.BASE_URL }}
+    outputs:
+      report-ready: ${{ steps.pages-artifact.outcome == 'success' }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -48,10 +50,34 @@ jobs:
 
       - name: Upload test report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report-${{ github.run_attempt }}
           path: |
             playwright-report/
             reports/junit.xml
           retention-days: 14
+
+      - name: Package report for GitHub Pages
+        id: pages-artifact
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' && hashFiles('playwright-report/index.html') != '' }}
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: playwright-report/
+
+  publish-report:
+    name: Publish report to GitHub Pages
+    needs: test
+    if: ${{ !cancelled() && needs.test.outputs.report-ready == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
