@@ -44,14 +44,14 @@ jobs:
         run: npx playwright install --with-deps chromium firefox
 
       - name: Run Playwright tests
-      run: npm test
+        run: npm test
 
-    - name: Upload test report
-      if: ${{ !cancelled() }}
-      uses: actions/upload-artifact@v5
-      with:
-        name: playwright-report-${{ github.run_attempt }}
-        path: |
-          playwright-report/
-          reports/junit.xml
-        retention-days: 14
+      - name: Upload test report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: playwright-report-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            reports/junit.xml
+          retention-days: 14
