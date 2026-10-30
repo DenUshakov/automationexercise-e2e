@@ -1,4 +1,5 @@
 import type { Locator } from '@playwright/test';
+import { testData } from '../src/config/test-data';
 import { expect, test } from '../src/fixtures';
 import { AccountCreatedPage } from '../src/pages/account-created-page';
 import { AccountDeletedPage } from '../src/pages/account-deleted-page';
@@ -35,7 +36,7 @@ const blockedSignupCases: BlockedSignupCase[] = [
   {
     id: 'REG-05',
     title: 'email is malformed',
-    input: { email: 'abc' },
+    input: { email: testData.registration.malformedEmail },
     field: 'email',
     flag: 'typeMismatch',
   },
@@ -79,13 +80,15 @@ test.describe('Registration', () => {
   test('REG-02 signup with an already registered email is rejected', async ({
     page,
     registeredUser,
-  }) => {
+  }, testInfo) => {
     const signupLogin = new SignupLoginPage(page);
     const accountInformation = new AccountInformationPage(page);
     const header = new Header(page);
+    // Only the name is used: the test case asks for a different name with the existing email.
+    const differentName = buildUser(testInfo.workerIndex).name;
 
     await signupLogin.goto();
-    await signupLogin.signup('Different Name', registeredUser.email);
+    await signupLogin.signup(differentName, registeredUser.email);
 
     // The error is the sync point: the hidden checks below only mean something after it.
     // The URL is not asserted: the site changes it to /signup while showing the same page.

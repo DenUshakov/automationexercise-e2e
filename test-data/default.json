@@ -16,6 +16,9 @@
     "zipcode": "M5V 2T6",
     "mobileNumber": "5550100100"
   },
+  "registration": {
+    "malformedEmail": "abc"
+  },
   "product": {
     "id": 1,
     "searchTerm": "Blue Top",

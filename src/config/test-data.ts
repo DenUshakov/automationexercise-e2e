@@ -21,6 +21,9 @@ const TestDataSchema = z.object({
     zipcode: z.string().min(1),
     mobileNumber: z.string().min(1),
   }),
+  registration: z.object({
+    malformedEmail: z.string().min(1),
+  }),
   product: z.object({
     id: z.number().int().positive(),
     searchTerm: z.string().min(1),
