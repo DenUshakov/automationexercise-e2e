@@ -9,6 +9,9 @@ export default defineConfig({
   forbidOnly: isCI,
   // One retry in CI absorbs a network blip on the public site; a second would hide flakiness.
   retries: isCI ? 1 : 0,
+  // When the target is down every test fails the same way: stop early to stay inside the job
+  // timeout, keep the report small and stop sending traffic to a site that is not responding.
+  maxFailures: isCI ? 10 : 0,
   // The target is a shared public demo site, so CI parallelism stays moderate.
   // '50%' of CPU cores is Playwright's own default, written out to keep the config explicit.
   workers: env.workers ?? (isCI ? 2 : '50%'),

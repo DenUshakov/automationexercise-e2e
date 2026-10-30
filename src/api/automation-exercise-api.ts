@@ -88,7 +88,9 @@ export class AutomationExerciseApi {
     const response = await this.request.fetch(path, { method, ...options });
     const text = await response.text();
     if (response.status() !== 200) {
-      throw new Error(`${method} ${path}: unexpected HTTP ${response.status()}: ${text}`);
+      throw new Error(
+        `${method} ${path}: unexpected HTTP ${response.status()}: ${text.slice(0, 200)}`,
+      );
     }
     let body: unknown;
     try {
