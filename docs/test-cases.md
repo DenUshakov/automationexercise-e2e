@@ -2,7 +2,7 @@
 
 Target: https://automationexercise.com (configurable via `BASE_URL`).
 
-This document covers Task 1 (registration) and Task 2 (product search and product detail). Every case is based on behaviour observed on the site during reconnaissance, not on assumptions. Where the site behaves in a way that looks wrong, the case states the expected behaviour and links to the observation.
+This document covers Task 1 (registration) and Task 2 (product search and product detail). Every case is based on behaviour observed on the site during reconnaissance, not on assumptions. Where the site behaves in a way that looks wrong, the case states the expected behaviour and refers to the matching entry in the Observations section below.
 
 ## Priority scale
 
