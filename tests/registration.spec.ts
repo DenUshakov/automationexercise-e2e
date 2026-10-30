@@ -77,7 +77,7 @@ test.describe('Registration', () => {
     );
   });
 
-  test('REG-02 signup with an already registered email is rejected', async ({
+  test('REG-02 duplicate email is rejected at signup step 1', async ({
     page,
     registeredUser,
   }, testInfo) => {

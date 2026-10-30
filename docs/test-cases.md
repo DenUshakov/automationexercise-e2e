@@ -31,7 +31,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - **Test data:** Unique user from the factory: name, email, password, title, date of birth, first and last name, company, address 1 and 2, country, state, city, zipcode, mobile number.
 - **Steps:**
   1. Open the Signup / Login page.
-  2. In the "New User Signup!" form, enter name and email, click Signup.
+  2. Submit the "New User Signup!" form with the generated name and email.
   3. On the account details form, check that name is prefilled with the entered value and email is shown and not editable.
   4. Fill all fields, including the optional title, date of birth, newsletter and offers.
   5. Click Create Account.
@@ -42,14 +42,14 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
   - The user detail API for this email returns the account, and every field it returns matches what was entered: name, email, title, date of birth, first name, last name, company, address 1 and 2, country, state, city and zipcode. Mobile number, password and the newsletter and offers choices are not returned by the API, so they are not compared.
 - **Automated:** Yes. The API check proves the data was stored, not only that a confirmation page was rendered.
 
-### REG-02 Signup with an already registered email is rejected
+### REG-02 Duplicate email is rejected at signup step 1
 
 - **Priority:** P1. Duplicate accounts break login and account recovery; this is the most likely signup error for returning users.
 - **Preconditions:** An account with the test email exists. Created through the API, not the UI, because account creation is not the behaviour under test here.
 - **Test data:** Existing user's email, a different name.
 - **Steps:**
   1. Open the Signup / Login page.
-  2. In the "New User Signup!" form, enter a new name and the existing email, click Signup.
+  2. Submit the signup form with a different name and the email of the existing account.
 - **Expected result:**
   - The message "Email Address already exist!" is shown inside the signup form (text as implemented on the site).
   - The account details form is not shown.
@@ -142,7 +142,7 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 - **Test data:** Search term `Blue Top`; expected product name `Blue Top`, price `Rs. 500`, availability `In Stock`; quantity `3`.
 - **Steps:**
   1. Open the Products page.
-  2. Enter the search term and click the search button.
+  2. Submit the search term from the Products page.
   3. Open the product from its own result card.
   4. Read name, price and availability.
   5. Set quantity to 3 and click Add to cart.
@@ -226,26 +226,26 @@ This document covers Task 1 (registration) and Task 2 (product search and produc
 
 ## Summary
 
-| ID      | Title                       | Priority | Automated               |
-| ------- | --------------------------- | -------- | ----------------------- |
-| REG-01  | Successful registration     | P1       | Yes                     |
-| REG-02  | Duplicate email rejected    | P1       | Yes                     |
-| REG-03  | Empty name blocked          | P2       | Yes (data-driven)       |
-| REG-04  | Empty email blocked         | P2       | Yes (data-driven)       |
-| REG-05  | Malformed email blocked     | P2       | Yes (data-driven)       |
-| REG-06  | No account without password | P2       | Yes                     |
-| REG-07  | Whitespace-only name        | P2       | No (finding D3)         |
-| REG-08  | Delete account through UI   | P2       | Yes                     |
-| REG-09  | Dotless email domain        | P3       | No                      |
-| SRCH-01 | Known product to cart       | P1       | Yes                     |
-| SRCH-02 | Case-insensitive search     | P2       | Yes (data-driven)       |
-| SRCH-03 | Partial term matches API    | P2       | Yes                     |
-| SRCH-04 | No results                  | P2       | Yes                     |
-| SRCH-05 | Special characters          | P2       | Yes (data-driven)       |
-| SRCH-06 | Spaces around term          | P2       | Yes (known failing, D2) |
-| SRCH-07 | Empty search                | P3       | No                      |
-| SRCH-08 | Search on Enter             | P3       | No (finding D4)         |
-| CART-01 | Quantity below 1            | P1       | Yes (known failing, D1) |
+| ID      | Title                                     | Priority | Automated               |
+| ------- | ----------------------------------------- | -------- | ----------------------- |
+| REG-01  | Successful registration                   | P1       | Yes                     |
+| REG-02  | Duplicate email rejected at signup step 1 | P1       | Yes                     |
+| REG-03  | Empty name blocked                        | P2       | Yes (data-driven)       |
+| REG-04  | Empty email blocked                       | P2       | Yes (data-driven)       |
+| REG-05  | Malformed email blocked                   | P2       | Yes (data-driven)       |
+| REG-06  | No account without password               | P2       | Yes                     |
+| REG-07  | Whitespace-only name                      | P2       | No (finding D3)         |
+| REG-08  | Delete account through UI                 | P2       | Yes                     |
+| REG-09  | Dotless email domain                      | P3       | No                      |
+| SRCH-01 | Known product to cart                     | P1       | Yes                     |
+| SRCH-02 | Case-insensitive search                   | P2       | Yes (data-driven)       |
+| SRCH-03 | Partial term matches API                  | P2       | Yes                     |
+| SRCH-04 | No results                                | P2       | Yes                     |
+| SRCH-05 | Special characters                        | P2       | Yes (data-driven)       |
+| SRCH-06 | Spaces around term                        | P2       | Yes (known failing, D2) |
+| SRCH-07 | Empty search                              | P3       | No                      |
+| SRCH-08 | Search on Enter                           | P3       | No (finding D4)         |
+| CART-01 | Quantity below 1                          | P1       | Yes (known failing, D1) |
 
 ## Prioritisation rationale
 
